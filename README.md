@@ -1,6 +1,6 @@
 # Neural /Piecewise Affine Reach-avoid Computation (NeuralPARC)
 
-NeuralPARC is an extension of [PARC](https://github.com/safe-robotics-lab-gt/PARC/) (RSS'24), which computes a set of initial positions and trajectory parameters with which a robot is *guaranteed* to reach a goal through *narrow gaps*. It improves upon the original method in three ways:
+NeuralPARC (ICRA'25) is an extension of [PARC](https://github.com/safe-robotics-lab-gt/PARC/) (RSS'24), which computes a set of initial positions and trajectory parameters with which a robot is *guaranteed* to reach a goal through *narrow gaps*. It improves upon the original method in three ways:
 1. No assumption on system dynamics (*black-box*);
 2. No need for a *nominal plan*;
 3. Can arbitrarily decrease modelling error by adding more neurons.
@@ -22,6 +22,7 @@ Since NeuralPARC is data-driven, it is agnostic to how the black-box trajectorie
 -------
 ## Updates
 - [2024/10/02] **v0.1.0**: Initial code release
+- [2025/03/03] **v0.1.1**: Updated citations
 
 -------
 ## Setup Requirements
@@ -44,10 +45,11 @@ To run NeuralPARC on a custom dynamical system, simply provide `_rawdata.mat` an
 ## Citation
 Please cite [this paper](https://arxiv.org/abs/2409.13195) if you use `NeuralPARC`:
 ```bibtex
-@article{chung2024guaranteed,
+@article{chung2025guaranteed,
   title={Guaranteed Reach-Avoid for Black-Box Systems through Narrow Gaps via Neural Network Reachability},
   author={Chung, Long Kiu and Jung, Wonsuhk and Pullabhotla, Srivatsank and Shinde, Parth and Sunil, Yadu and Kota, Saihari and Batista, Luis Felipe Wolf and Pradalier, C{\'e}dric and Kousik, Shreyas},
-  journal={arXiv preprint arXiv:2409.13195},
-  year={2024}
+  booktitle={2025 IEEE International Conference on Robotics and Automation (ICRA)},
+  year={2025},
+  organization={IEEE}
 }
 ```

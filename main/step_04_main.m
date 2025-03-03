@@ -82,14 +82,20 @@ fprintf("Constructing error polyhedrons...\n");
 % Compute bounding boxes ahead of time
 O_B.outerApprox;
 
+% Note: this code assumes G and O as general polyhedrons. If they are
+% hyperrectangles, computation can be sped up by replacing the Minkowski
+% sum and Pontryagin difference operations with closed-form expressions.
+
 if isParfor
     % Shrink the goal
     if isBinning
         parfor i = 1:n_bin
-            G_tilde(i) = minkowski_diff_box(G, e_t_f(:, i));
+            E_t_f = Polyhedron('lb', -e_t_f(:, i), 'ub', e_t_f(:, i));
+            G_tilde(i) = G - E_t_f;
         end
     else
-        G_tilde = minkowski_diff_box(G, e_t_f(:));
+        E_t_f = Polyhedron('lb', -e_t_f(:), 'ub', e_t_f(:));
+        G_tilde = G - E_t_f;
     end
 
     % Set up index conversion
@@ -102,20 +108,23 @@ if isParfor
         [idx, jdx, kdx] = ind2sub(ns_O_tilde, i);
 
         % Buffer the obstacle
-        O_tilde_lin(i) = minkowski_sum_box(O_B(jdx), ...
-                                           e_tilde_ts(idx, :, kdx)');
+        E_tilde_ts = Polyhedron('lb', -e_tilde_ts(idx, :, kdx)', ...
+                                'ub', e_tilde_ts(idx, :, kdx)');
+        O_tilde_lin(i) = O_B(jdx) + E_tilde_ts;
     end
     O_tilde = reshape(O_tilde_lin, ns_O_tilde);
 else
     for kdx = 1:n_bin
         % Shrink the goal
-        G_tilde(kdx) = minkowski_diff_box(G, e_t_f(:, kdx));
+        E_t_f = Polyhedron('lb', -e_t_f(:, kdx), 'ub', e_t_f(:, kdx));
+        G_tilde(kdx) = G - E_t_f;
         for idx = 1:(n_t - 1)
             for jdx = 1:n_O
                 % Buffer the obstacle
-                O_tilde(idx, jdx, kdx) = minkowski_sum_box(O_B(jdx), ...
-                                                           e_tilde_ts( ...
-                                                           idx, :, kdx)');
+                E_tilde_ts = Polyhedron('lb', ...
+                                        -e_tilde_ts(idx, :, kdx)', ...
+                                        'ub', e_tilde_ts(idx, :, kdx)');
+                O_tilde(idx, jdx, kdx) = O_B(jdx) + E_tilde_ts;
             end
         end
     end
@@ -139,5 +148,5 @@ safe_samples = neuralparc('weights', Ws, ...
                           'trials', n_try);
 
 %% Save
-save(fullfile(base_dir, 'data', [demo_name, '_results.mat']), ...
-     'safe_samples');
+% save(fullfile(base_dir, 'data', [demo_name, '_results.mat']), ...
+%      'safe_samples');
