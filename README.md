@@ -1,4 +1,4 @@
-# Neural /Piecewise Affine Reach-avoid Computation (NeuralPARC)
+# Neural Piecewise Affine Reach-avoid Computation (NeuralPARC)
 
 NeuralPARC (ICRA'25) is an extension of [PARC](https://github.com/safe-robotics-lab-gt/PARC/) (RSS'24), which computes a set of initial positions and trajectory parameters with which a robot is *guaranteed* to reach a goal through *narrow gaps*. It improves upon the original method in three ways:
 1. No assumption on system dynamics (*black-box*);
