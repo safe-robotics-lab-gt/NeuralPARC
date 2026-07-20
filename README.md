@@ -30,6 +30,12 @@ Since NeuralPARC is data-driven, it is agnostic to how the black-box trajectorie
 To run this code, you will need
 1. [MPT3 Toolbox](https://www.mpt3.org/)
 2. [simulator](https://github.com/skousik/simulator)
+3. MATLAB and the following MATLAB toolboxes:
+   - Symbolic Math Toolbox
+   - Optimization Toolbox
+   - Deep Learning Toolbox
+   - Statistics and Machine Learning Toolbox
+   - Parallel Computing Toolbox
 
 -------
 ## Navigating This Repo
